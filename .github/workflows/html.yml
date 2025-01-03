@@ -1,0 +1,25 @@
+name: Run HTML on Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  serve-html:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup a static server
+      run: |
+        mkdir -p ./public
+        cp index.html ./public/index.html
+        python3 -m http.server 8000 --directory ./public &
+        sleep 5  # Give the server time to start
+
+    - name: Verify server is running
+      run: |
+        curl -I http://localhost:8000
