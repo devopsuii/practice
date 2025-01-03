@@ -1,4 +1,4 @@
-name: Run HTML on Server
+name: Run HTML file on the localhost
 
 on:
   push:
