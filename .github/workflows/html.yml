@@ -1,25 +1,17 @@
-name: Run HTML file on the localhost
+name: Deploy to Server
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ] # Trigger on pushes to the "main" branch
 
 jobs:
-  serve-html:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3 # Check out your repository code
 
-    - name: Setup a static server
+    - name: Deploy to Server
       run: |
-        mkdir -p ./public
-        cp index.html ./public/index.html
-        python3 -m http.server 8000 --directory ./public &
-        sleep 5  # Give the server time to start
-
-    - name: Verify server is running
-      run: |
-        curl -I http://localhost:8000
+        chmod +x deploy.sh # Make the script executable
+        ./deploy.sh
